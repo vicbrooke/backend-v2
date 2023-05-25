@@ -1,21 +1,21 @@
 import "./App.css";
+import Navbar from "./layout/Navbar";
+import { useAuth0 } from "@auth0/auth0-react";
+
+import Home from "./pages/Home";
 
 function App() {
+  const { isLoading, error } = useAuth0();
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      {error && <p>Authentication Error</p>}
+      {!error && isLoading && <p>Loading...</p>}
+      {!error && !isLoading && (
+        <>
+          <Home />
+        </>
+      )}
     </div>
   );
 }
