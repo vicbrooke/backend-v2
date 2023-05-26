@@ -16,6 +16,8 @@ root.render(
     clientId={clientId}
     authorizationParams={{
       redirect_uri: window.location.origin,
+      scope: "openid profile email",
+      audience: "http://backend-api",
     }}
   >
     <App />
