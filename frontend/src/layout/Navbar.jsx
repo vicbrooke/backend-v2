@@ -19,6 +19,7 @@ function Navbar() {
       <h1>My App</h1>
       <div className="links">
         <Link to={"/"}>Home Page</Link>
+        <Link to={"/endpoints"}>API Endpoints</Link>
         <Link to={"/articles"}>View Articles</Link>
       </div>
     </section>
