@@ -7,11 +7,15 @@ const Profile = () => {
   return (
     isAuthenticated &&
     !isLoading && (
-      <div>
-        <img src={user.picture} alt={user.name} />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-      </div>
+      <section className="profile">
+        <div>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+        </div>
+        <div>
+          <img src={user.picture} alt={user.name} />
+        </div>
+      </section>
     )
   );
 };

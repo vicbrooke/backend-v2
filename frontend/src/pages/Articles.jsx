@@ -30,17 +30,21 @@ function Articles() {
     isAuthenticated &&
     !isLoading &&
     articles && (
-      <div>
+      <section className="articles">
         {console.log(articles)}
         {articles.map((article) => {
           return (
-            <section>
+            <article>
               <h2>{article.title}</h2>
               <p>{article.body}</p>
-            </section>
+              <div className="article-info">
+                <p>Author: {article.user.name}</p>
+                <p>Comments: {article.comments.length}</p>
+              </div>
+            </article>
           );
         })}
-      </div>
+      </section>
     )
   );
 }
