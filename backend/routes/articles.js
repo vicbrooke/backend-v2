@@ -7,7 +7,9 @@ const articleRouter = Router();
 
 articleRouter.get("/", async (req, res, next) => {
   try {
-    const articles = await Article.findAll();
+    const articles = await Article.findAll({
+      include: [Comment, User],
+    });
     res.status(200).send({ articles });
   } catch (error) {
     console.log(error);
