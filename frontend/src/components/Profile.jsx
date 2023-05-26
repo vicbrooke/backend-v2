@@ -2,42 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
-    useAuth0();
-  const [userMetadata, setUserMetadata] = useState(null);
-
-  useEffect(() => {
-    const getUserMetadata = async () => {
-      const domain = "dev-er0sav73jq1ma0d2.uk.auth0.com";
-
-      try {
-        const accessToken = await getAccessTokenSilently({
-          authorizationParams: {
-            audience: `https://${domain}/api/v2/`,
-            scope: "read:current_user",
-          },
-        });
-
-        console.log(accessToken);
-        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user?.sub}`;
-
-        const metadataResponse = await fetch(userDetailsByIdUrl, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        const { user_metadata } = await metadataResponse.json();
-        console.log(user_metadata);
-
-        setUserMetadata(user_metadata);
-      } catch (e) {
-        console.log(e.message);
-      }
-    };
-
-    getUserMetadata();
-  }, [getAccessTokenSilently, user?.sub]);
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     isAuthenticated &&
