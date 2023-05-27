@@ -1,22 +1,17 @@
+/* General settings */
+
 .App {
   text-align: center;
-  background-color: #f7e1d7;
-  height: 100%;
 }
 
-#root {
+body {
   height: 100vh;
+  background-color: #f7e1d7;
 }
 
-.navbar {
-  display: flex;
-  flex-direction: column;
-  background-color: #edafb8;
-}
-
-.navbar-content {
-  display: flex;
-  justify-content: space-between;
+h1 {
+  font-size: 7vw;
+  margin: 0;
 }
 
 button {
@@ -29,13 +24,31 @@ button {
   font-size: larger;
 }
 
-.profile {
-  display: flex;
+select {
+  width: 4vw;
+  height: 3vw;
+  font-size: large;
 }
 
-h1 {
-  font-size: 7vw;
-  margin: 0;
+label {
+  font-size: large;
+}
+
+/* Navbar */
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  background-color: #edafb8;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile {
+  display: flex;
 }
 
 .links {
@@ -50,31 +63,8 @@ a {
   font-size: x-large;
 }
 
-.article-info {
-  display: flex;
-  justify-content: space-around;
-}
+/* Endpoints page */
 
-article {
-  width: 80%;
-  margin: 1vw;
-  padding: 1vw;
-  border: solid black 2px;
-  border-radius: 10px;
-  background-color: #dedbd2;
-}
-
-.articles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.api-endpoints {
-  /* text-align: left; */
-  margin-left: 5vw;
-  margin-top: 3vw;
-}
 .endpoints {
   display: flex;
 }
@@ -104,4 +94,32 @@ h4 {
 .table th {
   background-color: #b0c4b1;
   text-align: left;
+}
+
+/* Article page */
+
+.article-info {
+  display: flex;
+  justify-content: space-around;
+}
+
+article {
+  width: 80%;
+  margin: 1vw;
+  padding: 1vw;
+  border: solid black 2px;
+  border-radius: 10px;
+  background-color: #dedbd2;
+}
+
+.articles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.api-endpoints {
+  /* text-align: left; */
+  margin-left: 5vw;
+  margin-top: 3vw;
 }
