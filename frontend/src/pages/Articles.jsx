@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import Unauthorised from "../components/Unauthorised";
+import NewArticle from "../components/NewArticle";
 // import Pagination from "../components/Pagination";
 
 function Articles() {
@@ -15,7 +16,6 @@ function Articles() {
   const fetchData = async () => {
     try {
       const token = await getAccessTokenSilently();
-      console.log(token);
       const response = await axios.get(
         `http://localhost:4000/articles?limit=${articlesPerPage}&page=${currentPage}`,
         {
@@ -32,7 +32,7 @@ function Articles() {
 
   useEffect(() => {
     fetchData();
-  }, [articlesPerPage]);
+  }, [articlesPerPage, currentPage]);
 
   const handleClick = async () => {
     fetchData();
@@ -40,6 +40,7 @@ function Articles() {
 
   return isAuthenticated && !isLoading && articles ? (
     <section>
+      <NewArticle />
       <div className="pagination">
         <label>
           Results per page:
@@ -54,15 +55,18 @@ function Articles() {
             <option value={40}>40</option>
           </select>
         </label>
-        <button
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            handleClick();
-          }}
-        >
-          Previous
-        </button>
-
+        {currentPage > 0 && (
+          <button
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              handleClick();
+            }}
+          >
+            Previous
+          </button>
+        )}
+        {console.log(currentPage)}
+        {/* {currentPage && ( */}
         <button
           onClick={() => {
             setCurrentPage(currentPage + 1);
@@ -71,40 +75,43 @@ function Articles() {
         >
           Next
         </button>
+        {/* )} */}
       </div>
       <div className="articles">
-        {console.log(articles)}
         {articles.map((article) => {
           return (
-            <article>
+            <article key={article.id}>
               <h2>{article.title}</h2>
               <p>{article.body}</p>
               <div className="article-info">
-                <p>Author: {article.user.name}</p>
-                <p>Comments: {article.comments.length}</p>
+                <p>Author: {article.user?.name}</p>
+                <p>Comments: {article.comments?.length}</p>
               </div>
             </article>
           );
         })}
       </div>
       <div className="pagination">
-        <button
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            handleClick();
-          }}
-        >
-          Previous
-        </button>
-
-        <button
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-            handleClick();
-          }}
-        >
-          Next
-        </button>
+        {currentPage > 0 && (
+          <button
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              handleClick();
+            }}
+          >
+            Previous
+          </button>
+        )}
+        {currentPage && (
+          <button
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+              handleClick();
+            }}
+          >
+            Next
+          </button>
+        )}
       </div>
     </section>
   ) : (
