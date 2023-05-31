@@ -123,3 +123,20 @@ article {
   margin-left: 5vw;
   margin-top: 3vw;
 }
+
+/* NewArticle component */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  margin-top: 2em;
+  padding: 2em;
+}
+
+form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
