@@ -58,14 +58,15 @@ articleRouter.post("/", async (req, res, next) => {
   }
 });
 
-articleRouter.delete("/:id", async (req, res, next) => {
+articleRouter.delete("/:id/:username", async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id, username } = req.params;
     const articleToDelete = await Article.findOne({
       where: { id },
       include: User,
     });
-    if (articleToDelete.user.username === req.oidc.user.username) {
+    console.log(articleToDelete.user.username, username);
+    if (articleToDelete.user.username === username) {
       await Article.destroy({ where: { id } });
       res.status(202).send(`Article with id ${id} deleted`);
     } else {
@@ -77,10 +78,10 @@ articleRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
-articleRouter.put("/:id", async (req, res, next) => {
+articleRouter.put("/:id/:username", async (req, res, next) => {
   try {
     const data = req.body;
-    const { id } = req.params;
+    const { id, username } = req.params;
     const articleToUpdate = await Article.findOne({
       where: { id },
       include: User,
@@ -88,7 +89,7 @@ articleRouter.put("/:id", async (req, res, next) => {
     if (!articleToUpdate) {
       return res.status(404).send("Article not found");
     }
-    if (articleToUpdate.user.username === req.oidc.user.username) {
+    if (articleToUpdate.user.username === username) {
       await articleToUpdate.update(data);
       const updatedArticle = await Article.findOne({
         where: { id: req.params.id },

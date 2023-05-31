@@ -39,14 +39,14 @@ commentRouter.post("/", async (req, res, next) => {
   }
 });
 
-commentRouter.delete("/:id", async (req, res, next) => {
+commentRouter.delete("/:id/:username", async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id, username } = req.params;
     const commentToDelete = await Comment.findOne({
       where: { id },
       include: User,
     });
-    if (commentToDelete.user.username === req.oidc.user.username) {
+    if (commentToDelete.user.username === username) {
       await Comment.destroy({ where: { id } });
       res.status(202).send(`Comment with id ${id} deleted`);
     } else {
@@ -58,10 +58,10 @@ commentRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
-commentRouter.put("/:id", async (req, res, next) => {
+commentRouter.put("/:id/:username", async (req, res, next) => {
   try {
     const data = req.body;
-    const { id } = req.params;
+    const { id, username } = req.params;
     const commentToUpdate = await Comment.findOne({
       where: { id },
       include: User,

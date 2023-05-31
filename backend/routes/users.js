@@ -42,9 +42,9 @@ userRouter.post("/", async (req, res, next) => {
 
 userRouter.delete("/:id", async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id, username } = req.params;
     const userToDelete = await User.findOne({ where: { id } });
-    if (userToDelete.username === req.oidc.user.username) {
+    if (userToDelete.username === username) {
       await User.destroy({ where: { id } });
       res.status(202).send(`User with id ${id} deleted`);
     } else {
@@ -56,16 +56,16 @@ userRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
-userRouter.put("/:id", async (req, res, next) => {
+userRouter.put("/:id/:username", async (req, res, next) => {
   try {
     const data = req.body;
-    const { id } = req.params;
+    const { id, username } = req.params;
     const userToUpdate = await User.findOne({ where: { id } });
 
     if (!userToUpdate) {
       return res.status(404).send("User not found");
     }
-    if (userToUpdate.username === req.oidc.user.username) {
+    if (userToUpdate.username === username) {
       await userToUpdate.update(data);
       const updatedUser = await User.findOne({
         where: { id: req.params.id },
