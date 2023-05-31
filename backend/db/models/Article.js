@@ -7,7 +7,6 @@ const Article = db.define("article", {
     autoIncrement: true,
   },
   title: Sequelize.STRING,
-  // author: Sequelize.STRING,
   body: Sequelize.STRING,
   votes: Sequelize.INTEGER,
 });
