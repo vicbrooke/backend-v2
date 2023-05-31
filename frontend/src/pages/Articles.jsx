@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import Unauthorised from "../components/Unauthorised";
 import NewArticle from "../components/NewArticle";
+import Article from "../components/Article";
 // import Pagination from "../components/Pagination";
 
 function Articles() {
@@ -12,6 +13,10 @@ function Articles() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const [articlesPerPage, setArticlesPerPage] = useState(10);
+
+  const handleArticleDelete = (articleId) => {
+    setArticles(articles.filter((article) => article.id !== articleId));
+  };
 
   const fetchData = async () => {
     try {
@@ -80,14 +85,11 @@ function Articles() {
       <div className="articles">
         {articles.map((article) => {
           return (
-            <article key={article.id}>
-              <h2>{article.title}</h2>
-              <p>{article.body}</p>
-              <div className="article-info">
-                <p>Author: {article.user?.name}</p>
-                <p>Comments: {article.comments?.length}</p>
-              </div>
-            </article>
+            <Article
+              key={article.id}
+              article={article}
+              onDelete={handleArticleDelete}
+            />
           );
         })}
       </div>
