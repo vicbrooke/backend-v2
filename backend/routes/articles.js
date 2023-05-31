@@ -1,6 +1,5 @@
 const { Article, Comment, User } = require("../db/models/");
 const { Router } = require("express");
-
 const articleRouter = Router();
 
 // add article routes here
@@ -37,7 +36,21 @@ articleRouter.get("/:id", async (req, res, next) => {
 articleRouter.post("/", async (req, res, next) => {
   try {
     const data = req.body;
-    const newArticle = await Article.create(data);
+    const [user, created] = await User.findOrCreate({
+      where: { username: data.username },
+      defaults: {
+        name: data.username,
+        email: data.email,
+        avatar_URL: data.avatar_URL,
+      },
+    });
+    const userId = user.id;
+    const { title, body } = data;
+    const newArticle = await Article.create({
+      title,
+      body,
+      userId,
+    });
     res.status(201).send({ newArticle });
   } catch (error) {
     console.log(error);
