@@ -25,7 +25,7 @@ function NewArticle() {
           },
         }
       );
-      console.log(response);
+      alert("Your article has been submitted successfully!");
     } catch (error) {}
   };
   return (

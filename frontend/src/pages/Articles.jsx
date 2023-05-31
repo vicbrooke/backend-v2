@@ -70,8 +70,6 @@ function Articles() {
             Previous
           </button>
         )}
-        {console.log(currentPage)}
-        {/* {currentPage && ( */}
         <button
           onClick={() => {
             setCurrentPage(currentPage + 1);
@@ -80,7 +78,6 @@ function Articles() {
         >
           Next
         </button>
-        {/* )} */}
       </div>
       <div className="articles">
         {articles.map((article) => {

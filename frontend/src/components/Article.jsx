@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function Article({ article, onDelete }) {
   const { user, getAccessTokenSilently } = useAuth0();
-  console.log(user);
   const articleId = article.id;
 
   const handleDelete = async () => {
@@ -29,7 +28,6 @@ function Article({ article, onDelete }) {
 
   return (
     <article key={article.id}>
-      {console.log(article.user.username, user.nickname)}
       <h2>{article.title}</h2>
       <p>{article.body}</p>
       <div className="article-info">
