@@ -31,23 +31,26 @@ function NewArticle() {
   return (
     <section className="form-container">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="title">Title:</label>
-        <input
-          id="title"
-          placeholder="title"
-          {...register("title", { required: true })}
-        />
-        {errors.title && <span>This field is required</span>}
-        <label htmlFor="title">Article:</label>
-        <input
-          type="textArea"
-          id="article"
-          placeholder="enter your text here"
-          {...register("body", { required: true })}
-        />
-        {errors.body && <span>This field is required</span>}
+        <div className="title-container">
+          <label htmlFor="title">Title:</label>
+          <input
+            id="title"
+            placeholder="title"
+            {...register("title", { required: true })}
+          />
+        </div>
+        {errors.title && <span>*This field is required</span>}
+        <div className="body-container">
+          <label htmlFor="title">Article:</label>
+          <textarea
+            id="article"
+            placeholder="enter your text here"
+            {...register("body", { required: true })}
+          />
+        </div>
+        {errors.body && <span>*This field is required</span>}
 
-        <input type="submit" />
+        <input type="submit" className="submit-btn" />
       </form>
     </section>
   );
