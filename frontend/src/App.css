@@ -212,19 +212,46 @@ span {
   background-color: #4a5759;
   padding: 2vw;
   max-width: 80vw;
-  /* display: flex;
-  flex-direction: column;
-  align-items: flex-end; */
   border-radius: 10px;
-
-  /* Add any additional styles for your modal */
 }
 
-/* .modal {
+/* Single Article page */
+
+.single-article {
   display: flex;
   flex-direction: column;
-  background-color: #4a5759;
   align-items: center;
-  padding: 2vw;
+  background-color: #b0c4b1;
+  margin: 3vw;
+  padding: 1vw;
   border-radius: 10px;
-} */
+}
+
+.article-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 90%;
+}
+
+hr {
+  color: #4a5759;
+  border: solid #4a5759 2px;
+  width: 90%;
+  border-radius: 50px;
+}
+
+.comment {
+  background-color: #dedbd2;
+  margin: 1vw;
+  padding: 1vw;
+  width: 50vw;
+  border-radius: 10px;
+  justify-self: center;
+}
+
+.comment-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
