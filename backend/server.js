@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const { auth, requiredScopes } = require("express-oauth2-jwt-bearer");
 const cors = require("cors");
 
 const {
@@ -9,13 +8,7 @@ const {
   getApi,
   userRouter,
 } = require("./routes/index");
-
-// Authorization middleware. When used, the Access Token must exist and be verified against the Auth0 JSON Web Key Set.
-const checkJwt = auth({
-  audience: "http://backend-api",
-  issuerBaseURL: `https://dev-er0sav73jq1ma0d2.uk.auth0.com/`,
-  tokenSigningAlg: "RS256",
-});
+const checkJwt = require("./utils/checkJwt");
 
 app.use(cors());
 app.use(express.json());
