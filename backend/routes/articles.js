@@ -1,6 +1,8 @@
 const { Article, Comment, User } = require("../db/models/");
 const { Router } = require("express");
 const articleRouter = Router();
+const { scopeIncludesAny } = require("express-oauth2-jwt-bearer");
+const checkJwt = require("../utils/checkJwt");
 
 // add article routes here
 
@@ -58,25 +60,35 @@ articleRouter.post("/", async (req, res, next) => {
   }
 });
 
-articleRouter.delete("/:id/:username", async (req, res, next) => {
-  try {
-    const { id, username } = req.params;
-    const articleToDelete = await Article.findOne({
-      where: { id },
-      include: User,
-    });
-    console.log(articleToDelete.user.username, username);
-    if (articleToDelete.user.username === username) {
-      await Article.destroy({ where: { id } });
-      res.status(202).send(`Article with id ${id} deleted`);
-    } else {
-      res.status(401).send("You do not have permission to delete this article");
+articleRouter.delete(
+  "/:id/:username",
+  checkJwt,
+  scopeIncludesAny("write:all read:all write:mine read:mine"),
+  async (req, res, next) => {
+    try {
+      const { id, username } = req.params;
+      const { scope } = req.auth.payload;
+      const articleToDelete = await Article.findOne({
+        where: { id },
+        include: User,
+      });
+      if (
+        articleToDelete.user.username === username ||
+        scope.includes("write:all")
+      ) {
+        await Article.destroy({ where: { id } });
+        res.status(202).send(`Article with id ${id} deleted`);
+      } else {
+        res
+          .status(401)
+          .send("You do not have permission to delete this article");
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
-  } catch (error) {
-    console.log(error);
-    next(error);
   }
-});
+);
 
 articleRouter.put("/:id/:username", async (req, res, next) => {
   try {
