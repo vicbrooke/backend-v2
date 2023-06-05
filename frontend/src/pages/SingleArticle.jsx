@@ -42,6 +42,7 @@ function SingleArticle() {
           <p>👍 {article.votes}</p>
           <p>Author: {article.user.name}</p>
         </div>
+        <hr />
         <h3>Comments:</h3>
         {article.comments.map((comment) => {
           return (
