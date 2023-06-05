@@ -103,7 +103,6 @@ articleRouter.put(
         where: { id },
         include: User,
       });
-      console.log(data, id, username);
       if (!articleToUpdate) {
         return res.status(404).send("Article not found");
       }
