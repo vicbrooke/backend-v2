@@ -90,30 +90,42 @@ articleRouter.delete(
   }
 );
 
-articleRouter.put("/:id/:username", async (req, res, next) => {
-  try {
-    const data = req.body;
-    const { id, username } = req.params;
-    const articleToUpdate = await Article.findOne({
-      where: { id },
-      include: User,
-    });
-    if (!articleToUpdate) {
-      return res.status(404).send("Article not found");
-    }
-    if (articleToUpdate.user.username === username) {
-      await articleToUpdate.update(data);
-      const updatedArticle = await Article.findOne({
-        where: { id: req.params.id },
+articleRouter.put(
+  "/:id/:username",
+  checkJwt,
+  scopeIncludesAny("write:all read:all write:mine read:mine"),
+  async (req, res, next) => {
+    try {
+      const data = req.body;
+      const { scope } = req.auth.payload;
+      const { id, username } = req.params;
+      const articleToUpdate = await Article.findOne({
+        where: { id },
+        include: User,
       });
-      res.status(200).send({ updatedArticle });
-    } else {
-      res.status(401).send("You do not have permission to update this article");
+      console.log(data, id, username);
+      if (!articleToUpdate) {
+        return res.status(404).send("Article not found");
+      }
+      if (
+        articleToUpdate.user.username === username ||
+        scope.includes("write:all")
+      ) {
+        await articleToUpdate.update(data);
+        const updatedArticle = await Article.findOne({
+          where: { id: req.params.id },
+        });
+        res.status(200).send({ updatedArticle });
+      } else {
+        res
+          .status(401)
+          .send("You do not have permission to update this article");
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
-  } catch (error) {
-    console.log(error);
-    next(error);
   }
-});
+);
 
 module.exports = articleRouter;

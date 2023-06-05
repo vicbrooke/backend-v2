@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import Unauthorised from "../components/Unauthorised";
 import NewArticle from "../components/NewArticle";
 import Article from "../components/Article";
-// import Pagination from "../components/Pagination";
 
 function Articles() {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
@@ -14,16 +12,12 @@ function Articles() {
   const [scopes, setScopes] = React.useState([]);
 
   const [articlesPerPage, setArticlesPerPage] = useState(10);
-  const handleArticleDelete = (articleId) => {
-    setArticles(articles.filter((article) => article.id !== articleId));
-  };
 
   const fetchData = async () => {
     try {
       const token = await getAccessTokenSilently();
-      const tokenDecoded = JSON.parse(
-        Buffer.from(token.split(".")[1], "base64").toString("utf-8")
-      );
+      const tokenDecoded = JSON.parse(atob(token.split(".")[1]));
+
       const tokenScopes = tokenDecoded.scope.split(" ");
       setScopes(tokenScopes);
 
@@ -46,6 +40,14 @@ function Articles() {
   }, [articlesPerPage, currentPage]);
 
   const handleClick = async () => {
+    fetchData();
+  };
+
+  const handleArticleDelete = (articleId) => {
+    setArticles(articles.filter((article) => article.id !== articleId));
+  };
+
+  const handleArticleUpdate = () => {
     fetchData();
   };
 
@@ -92,6 +94,7 @@ function Articles() {
               key={article.id}
               article={article}
               onDelete={handleArticleDelete}
+              onUpdate={handleArticleUpdate}
               scopes={scopes}
             />
           );
