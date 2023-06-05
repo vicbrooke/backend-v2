@@ -11,9 +11,9 @@ function Articles() {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const [articles, setArticles] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [scopes, setScopes] = React.useState([]);
 
   const [articlesPerPage, setArticlesPerPage] = useState(10);
-
   const handleArticleDelete = (articleId) => {
     setArticles(articles.filter((article) => article.id !== articleId));
   };
@@ -21,6 +21,12 @@ function Articles() {
   const fetchData = async () => {
     try {
       const token = await getAccessTokenSilently();
+      const tokenDecoded = JSON.parse(
+        Buffer.from(token.split(".")[1], "base64").toString("utf-8")
+      );
+      const tokenScopes = tokenDecoded.scope.split(" ");
+      setScopes(tokenScopes);
+
       const response = await axios.get(
         `http://localhost:4000/articles?limit=${articlesPerPage}&page=${currentPage}`,
         {
@@ -86,6 +92,7 @@ function Articles() {
               key={article.id}
               article={article}
               onDelete={handleArticleDelete}
+              scopes={scopes}
             />
           );
         })}
@@ -101,16 +108,15 @@ function Articles() {
             Previous
           </button>
         )}
-        {currentPage && (
-          <button
-            onClick={() => {
-              setCurrentPage(currentPage + 1);
-              handleClick();
-            }}
-          >
-            Next
-          </button>
-        )}
+
+        <button
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+            handleClick();
+          }}
+        >
+          Next
+        </button>
       </div>
     </section>
   ) : (
