@@ -12,9 +12,10 @@ root.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
+    useRefreshTokens={true}
     authorizationParams={{
       redirect_uri: window.location.origin,
-      scope: "openid profile email",
+      scope: "openid profile email read:all write:all read:mine write:mine",
       audience: "http://backend-api",
     }}
   >
