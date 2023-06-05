@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Articles from "./pages/Articles";
 import ApiEndpoints from "./pages/ApiEndpoints";
+import SingleArticle from "./pages/SingleArticle";
 
 function App() {
   const { isLoading, error } = useAuth0();
@@ -21,6 +22,7 @@ function App() {
               <Route exact path="/" element={<Home />} />
               <Route exact path="/endpoints" element={<ApiEndpoints />} />
               <Route exact path="/articles" element={<Articles />} />
+              <Route exact path="/articles/:id" element={<SingleArticle />} />
             </Routes>
           </>
         )}

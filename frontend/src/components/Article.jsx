@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditArticleModal from "./EditArticleModal";
 
 function Article({ article, onDelete, onUpdate, scopes }) {
   const { user, getAccessTokenSilently } = useAuth0();
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const articleId = article.id;
 
@@ -34,6 +36,9 @@ function Article({ article, onDelete, onUpdate, scopes }) {
         <div className="article-info">
           <p>Author: {article.user?.name}</p>
           <p>Comments: {article.comments?.length}</p>
+          <button onClick={() => navigate(`/articles/${article.id}`)}>
+            Click to view more
+          </button>
         </div>
         {article.user.username === user.nickname ||
         scopes.includes("write:all") ? (
