@@ -36,30 +36,34 @@ function EditArticleModal({ article, showModal, setShowModal, onUpdate }) {
     }
   };
   return (
-    <section className="modal">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="title-container">
-          <label htmlFor="title">Title:</label>
-          <input
-            id="title"
-            defaultValue={article.title}
-            {...register("title", { required: true })}
-          />
-        </div>
-        {errors.title && <span>*This field is required</span>}
-        <div className="body-container">
-          <label htmlFor="title">Article:</label>
-          <textarea
-            id="article"
-            defaultValue={article.body}
-            {...register("body", { required: true })}
-          />
-        </div>
-        {errors.body && <span>*This field is required</span>}
+    <section className="modal-overlay">
+      <button className="modal-btn" onClick={() => setShowModal(!showModal)}>
+        Close
+      </button>
+      <div className="modal">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="title-container">
+            <label htmlFor="title">Title:</label>
+            <input
+              id="title"
+              defaultValue={article.title}
+              {...register("title", { required: true })}
+            />
+          </div>
+          {errors.title && <span>*This field is required</span>}
+          <div className="body-container">
+            <label htmlFor="title">Article:</label>
+            <textarea
+              id="article"
+              defaultValue={article.body}
+              {...register("body", { required: true })}
+            />
+          </div>
+          {errors.body && <span>*This field is required</span>}
 
-        <input type="submit" className="submit-btn" />
-      </form>
-      <button onClick={() => setShowModal(!showModal)}>Close</button>
+          <input type="submit" className="submit-btn" value="Update article" />
+        </form>
+      </div>
     </section>
   );
 }
