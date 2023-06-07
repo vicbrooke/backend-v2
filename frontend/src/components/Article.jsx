@@ -36,7 +36,10 @@ function Article({ article, onDelete, onUpdate, scopes }) {
         <div className="article-info">
           <p>Author: {article.user?.name}</p>
           <p>Comments: {article.comments?.length}</p>
-          <button onClick={() => navigate(`/articles/${article.id}`)}>
+          <button
+            className="view-btn"
+            onClick={() => navigate(`/articles/${article.id}`)}
+          >
             Click to view more
           </button>
         </div>

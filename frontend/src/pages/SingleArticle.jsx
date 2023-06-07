@@ -38,7 +38,7 @@ function SingleArticle() {
         {console.log(article)}
         <h2>{article.title}</h2>
         <p>{article.body}</p>
-        <div className="article-info">
+        <div className="single-article-info">
           <p>👍 {article.votes}</p>
           <p>Author: {article.user.name}</p>
         </div>

@@ -98,10 +98,15 @@ h4 {
 }
 
 /* Article page */
+.articles-container {
+  display: flex;
+  flex-direction: column;
+}
 
 .article-info {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 article {
@@ -123,6 +128,16 @@ article {
   /* text-align: left; */
   margin-left: 5vw;
   margin-top: 3vw;
+}
+
+.form-btn {
+  height: fit-content;
+  align-self: end;
+}
+
+.view-btn {
+  height: fit-content;
+  margin-right: 0;
 }
 
 /* NewArticle component */
@@ -227,7 +242,7 @@ span {
   border-radius: 10px;
 }
 
-.article-info {
+.single-article-info {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
