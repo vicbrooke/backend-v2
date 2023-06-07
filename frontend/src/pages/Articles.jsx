@@ -9,7 +9,8 @@ function Articles() {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const [articles, setArticles] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const [scopes, setScopes] = React.useState([]);
+  const [scopes, setScopes] = useState([]);
+  const [viewForm, setViewForm] = useState(false);
 
   const [articlesPerPage, setArticlesPerPage] = useState(10);
 
@@ -52,8 +53,15 @@ function Articles() {
   };
 
   return isAuthenticated && !isLoading && articles ? (
-    <section>
-      <NewArticle />
+    <section className="articles-container">
+      {!viewForm && (
+        <button className="form-btn" onClick={() => setViewForm(true)}>
+          Add new article
+        </button>
+      )}
+
+      {viewForm && <NewArticle setViewForm={setViewForm} />}
+
       <div className="pagination">
         <label>
           Results per page:

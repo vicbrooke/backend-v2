@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useForm } from "react-hook-form";
 
-function NewArticle() {
+function NewArticle({ setViewForm }) {
   const { user, getAccessTokenSilently } = useAuth0();
 
   const {
@@ -30,6 +30,9 @@ function NewArticle() {
   };
   return (
     <section className="form-container">
+      <button className="form-btn" onClick={() => setViewForm(false)}>
+        Close form
+      </button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="title-container">
           <label htmlFor="title">Title:</label>
